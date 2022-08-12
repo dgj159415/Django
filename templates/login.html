@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+{% load static %}
+<link rel="SHORTCUT ICON" href="{% static "favicon.ico" %}" type="image/x-icon"/>
+
+
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script>
+     function login() {
+         var username=document.getElementById("username").value
+         var password=document.getElementById("password").value
+         $.ajax({
+                url: "http://127.0.0.1:8000/login/",
+                type: "POST",
+                dataType:"json",
+                data: {
+                    "username": username,
+                    "password": password
+                },
+                beforeSend:function(xhr, settings) {
+                    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                },
+                success: function(data){
+                    if (data.result==0)
+                    {
+                        correct()
+                        //setcooike(username)
+                        window.location = '/index/'
+
+                    }
+                    else {
+                        alert(data.msg)
+                    }
+                }
+            })
+            }
+     function setcooike(username) {
+
+         $.ajax({
+                url: "http://127.0.0.1:8000/setcooike/",
+                type: "GET",
+                dataType:"json",
+                data: {
+                    "username": username
+                },
+             })
+
+     }
+     function toast(text, time) {
+            let toast = document.getElementById('toast');
+            let toast_box = document.getElementsByClassName('toast_box')[0];
+            toast.innerHTML = text;
+            toast_box.style.animation = 'show 1.5s'
+            toast_box.style.display = 'inline-block';
+            setTimeout(function(){
+                toast_box.style.animation = 'hide 1.5s'
+                setTimeout(function(){
+                    toast_box.style.display = 'none';
+                }, 1400)
+            }, time)
+
+		}
+
+			//调用
+     function correct(){
+			toast("登录成功，跳转主页……",2000);
+		}
+    </script>
+    <title>阿尔法 - 发现更大的世界</title>
+    <style>
+         @keyframes show {
+			    0% {
+			        opacity: 0;
+			    }
+
+			    100% {
+			        opacity: 1;
+			    }
+			}
+
+			@keyframes hide {
+			    0% {
+			        opacity: 1;
+			    }
+
+			    100% {
+			        opacity: 0;
+			    }
+			}
+
+        .toast_box {
+			    /* width: 100%; */
+			    position: absolute;
+			    bottom: 50%;
+				left: 50%;
+			    /* justify-content: center; */
+				z-index: 10;
+				transform: translate(-50%, -50%);
+			    display: none;
+			}
+
+			.toast_box p {
+			    box-sizing: border-box;
+			    padding: 10px 20px;
+			    width: max-content;
+				/* 提示框的背景色 */
+			    background: #707070;
+			    color: #fff;
+			    font-size: 16px;
+			    text-align: center;
+			    border-radius: 6px;
+			    opacity: 0.8;
+			}
+
+			.toliet{
+				margin: 0 auto;
+			}
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        html {
+            height: 100%;
+        }
+        body {
+            height: 100%;
+        }
+        .container {
+            height: 100%;
+            background-image: linear-gradient(to right, #fbc2eb, #a6c1ee);
+        }
+        .login-wrapper {
+            background-color: #fff;
+            width: 358px;
+            height: 588px;
+            border-radius: 15px;
+            padding: 0 50px;
+            position: relative;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .header {
+            font-size: 38px;
+            font-weight: bold;
+            text-align: center;
+            line-height: 200px;
+        }
+        .input-item {
+            display: block;
+            width: 100%;
+            margin-bottom: 20px;
+            border: 0;
+            padding: 10px;
+            border-bottom: 1px solid rgb(128, 125, 125);
+            font-size: 15px;
+            outline: none;
+        }
+        .btn {
+            text-align: center;
+            padding: 10px;
+            width: 100%;
+            margin-top: 40px;
+            background-image: linear-gradient(to right, #a6c1ee, #fbc2eb);
+            color: #fff;
+        }
+        .msg {
+            text-align: center;
+            line-height: 88px;
+        }
+        a {
+            text-decoration-line: none;
+            color: #abc1ee;
+        }
+        .aaa{
+            float:right
+        }
+    </style>
+</head>
+<body>
+        <div class="toast_box">
+            <p id="toast"></p>
+        </div>
+    <div class="container">
+        <div class="login-wrapper">
+            <div class="header">阿尔法 - 登录</div>
+            <div class="form-wrapper">
+
+                    {% csrf_token %}
+                <input type="text" id="username" placeholder="请输入用户名" class="input-item">
+                <input type="password" id="password" placeholder="请输入密码" class="input-item">
+                <a href="#" class="aaa">忘记密码？</a>
+                <button class="btn" onclick="login()" >登录</button>
+
+            </div>
+            <div id="myDiv"></div>
+            <div class="msg">
+                还没有账号?
+                <a href="/register/">去注册→</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

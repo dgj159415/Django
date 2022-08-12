@@ -1,0 +1,18 @@
+
+<!DOCTYPE html>
+<html>
+<head><link rel="icon" href="../static/favicon.ico" type ="image/x-icon">
+<meta charset="utf-8">
+<title>杜高见！</title>
+</head>
+<body>
+    <form action="/search-post/" method="post">
+        {% csrf_token %}
+        <input type="text" name="q">
+        <input type="password" name="e">
+        <input type="submit" value="登录">
+    </form>
+ 
+    <p>{{ ctx }}</p>
+</body>
+</html>

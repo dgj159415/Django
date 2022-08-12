@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+        {% load static %}
+<link rel="SHORTCUT ICON" href="{% static "favicon.ico" %}" type="image/x-icon"/>
+		<title>阿尔法 - 发现更大的世界</title>
+        <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript">
+        function logout() {
+            var username=document.getElementById("username")
+
+
+         $.ajax({
+                url: "http://127.0.0.1:8000/logout/",
+                type: "GET",
+                dataType:"json",
+                data: {
+                    "username": username.innerText
+                },
+                success: function(data){
+                    if (data.result==0){
+
+                        correct()
+                        //clearAllCookie()
+                        window.location = '/'
+                        }
+                }
+            })
+            }
+        function clearAllCookie() {
+                $.ajax({
+                url: "http://127.0.0.1:8000/delecooike/",
+                type: "GET",
+
+             })
+
+                    }
+		function sendAjax() {
+			//创建对象
+			var xmlhttp = new XMLHttpRequest();
+			//发送请求
+			xmlhttp.open("GET", "http://127.0.0.1:8000/test", true);
+			xmlhttp.send();
+			//接收服务器的响应
+			xmlhttp.onreadystatechange = function() {
+				if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+					//接收后台响应的json字符串
+					 var jsonStr=xmlhttp.responseText;
+					 console.log(jsonStr);
+
+				}
+			}
+		}
+		 function toast(text, time) {
+            let toast = document.getElementById('toast');
+            let toast_box = document.getElementsByClassName('toast_box')[0];
+            toast.innerHTML = text;
+            toast_box.style.animation = 'show 1.5s'
+            toast_box.style.display = 'inline-block';
+            setTimeout(function(){
+                toast_box.style.animation = 'hide 1.5s'
+                setTimeout(function(){
+                    toast_box.style.display = 'none';
+                }, 1400)
+            }, time)
+
+		}
+
+			//调用
+     function correct(){
+			toast("退出成功",2000);
+		}
+	</script>
+        <style>
+            @keyframes show {
+			    0% {
+			        opacity: 0;
+			    }
+
+			    100% {
+			        opacity: 1;
+			    }
+			}
+
+			@keyframes hide {
+			    0% {
+			        opacity: 1;
+			    }
+
+			    100% {
+			        opacity: 0;
+			    }
+			}
+
+        .toast_box {
+			    /* width: 100%; */
+			    position: absolute;
+			    bottom: 50%;
+				left: 50%;
+			    /* justify-content: center; */
+				z-index: 10;
+				transform: translate(-50%, -50%);
+			    display: none;
+			}
+
+			.toast_box p {
+			    box-sizing: border-box;
+			    padding: 10px 20px;
+			    width: max-content;
+				/* 提示框的背景色 */
+			    background: #707070;
+			    color: #fff;
+			    font-size: 16px;
+			    text-align: center;
+			    border-radius: 6px;
+			    opacity: 0.8;
+			}
+
+			.toliet{
+				margin: 0 auto;
+			}
+
+        </style>
+	</head>
+	<body>
+    <div class="toast_box">
+            <p id="toast"></p>
+        </div>
+		<button type="button" onclick="sendAjax()">发送Get请求</button>
+
+		<h1>每日一笑</h1>
+        <p id="username">{{ username }}</p>
+		<ul id="myul">
+         <button class="btn" onclick="logout()" >注销</button>
+		</ul>
+	</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{#<!DOCTYPE html>#}
+{#{% load static %}#}
+{#<html lang="en">#}
+{#<head>#}
+{#        <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">#}
+{#    <meta charset="UTF-8">#}
+{#    <title>主界面</title>#}
+{#</head>#}
+{#<body>#}
+{#<h1>主界面</h1>#}
+{##}
+{#<br>#}
+{#<br>#}
+{#<a href="/select/">查询数据</a>#}
+{#{{ context }}#}
+{#</body>#}
+{#</html>#}
