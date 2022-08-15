@@ -36,22 +36,6 @@
              })
 
                     }
-		function sendAjax() {
-			//创建对象
-			var xmlhttp = new XMLHttpRequest();
-			//发送请求
-			xmlhttp.open("GET", "http://127.0.0.1:8000/test", true);
-			xmlhttp.send();
-			//接收服务器的响应
-			xmlhttp.onreadystatechange = function() {
-				if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-					//接收后台响应的json字符串
-					 var jsonStr=xmlhttp.responseText;
-					 console.log(jsonStr);
-
-				}
-			}
-		}
 		 function toast(text, time) {
             let toast = document.getElementById('toast');
             let toast_box = document.getElementsByClassName('toast_box')[0];
@@ -127,9 +111,6 @@
     <div class="toast_box">
             <p id="toast"></p>
         </div>
-		<button type="button" onclick="sendAjax()">发送Get请求</button>
-
-		<h1>每日一笑</h1>
         <p id="username">{{ username }}</p>
 		<ul id="myul">
          <button class="btn" onclick="logout()" >注销</button>
@@ -137,38 +118,3 @@
 	</body>
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{#<!DOCTYPE html>#}
-{#{% load static %}#}
-{#<html lang="en">#}
-{#<head>#}
-{#        <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">#}
-{#    <meta charset="UTF-8">#}
-{#    <title>主界面</title>#}
-{#</head>#}
-{#<body>#}
-{#<h1>主界面</h1>#}
-{##}
-{#<br>#}
-{#<br>#}
-{#<a href="/select/">查询数据</a>#}
-{#{{ context }}#}
-{#</body>#}
-{#</html>#}
